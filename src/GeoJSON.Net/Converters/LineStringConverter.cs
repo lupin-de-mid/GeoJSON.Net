@@ -24,7 +24,7 @@ namespace GeoJSON.Net.Converters
     /// <summary>
     /// Converter to read and write the <see cref="GeographicPosition" /> type.
     /// </summary>
-    public class PointConverter : JsonConverter
+	public class LineStringConverter : JsonConverter
     {
         /// <summary>	
         /// Writes the JSON representation of the object.
@@ -34,8 +34,14 @@ namespace GeoJSON.Net.Converters
         {
 			writer.WriteStartArray();
 			var g = value as List<IPosition>;
-	        var geographicPosition =g[0] as GeographicPosition;
-	        var s = string.Format("{0},{1}", geographicPosition.Latitude.ToString(CultureInfo.InvariantCulture), geographicPosition.Longitude.ToString(CultureInfo.InvariantCulture));
+	        var sb = new StringBuilder();
+	        foreach (var position in g)
+	        {
+		        var p = position as GeographicPosition;
+		        sb.AppendFormat("[{0},{1}],", p.Latitude, p.Longitude);
+	        }
+	        var s = sb.ToString();
+	        s = s.Remove(s.Length - 1);
 			writer.WriteRawValue(s);
 	        writer.WriteEndArray();
         }

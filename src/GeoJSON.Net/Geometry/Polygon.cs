@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using GeoJSON.Net.Converters;
+
 namespace GeoJSON.Net.Geometry
 {
     using System;
@@ -51,6 +53,7 @@ namespace GeoJSON.Net.Geometry
         /// Gets the list of points outlining this Polygon.
         /// </summary>
         [JsonProperty(PropertyName = "coordinates", Required = Required.Always)]
+		[JsonConverter(typeof(PolygonConverter))]
         public List<LineString> Coordinates { get; private set; }
     }
 }
