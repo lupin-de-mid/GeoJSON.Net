@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace GeoJSON.Net.Converters
@@ -39,7 +40,7 @@ namespace GeoJSON.Net.Converters
 			foreach (var position in lineString.Coordinates)
 			{
 				var p = position as GeographicPosition;
-				sb.AppendFormat("[{0},{1}],", p.Latitude, p.Longitude);
+				sb.AppendFormat("[{1},{0}],", p.Latitude.ToString(CultureInfo.InvariantCulture), p.Longitude.ToString(CultureInfo.InvariantCulture));
 			}
 			var s = sb.ToString();
 			s = s.Remove(s.Length - 1);
