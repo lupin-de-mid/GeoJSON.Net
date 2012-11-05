@@ -7,6 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Globalization;
+using System.Text;
+
 namespace GeoJSON.Net.Converters
 {
     using System;
@@ -29,7 +32,21 @@ namespace GeoJSON.Net.Converters
         /// <param name="writer">The <see cref="T:Newtonsoft.Json.JsonWriter"/> to write to.</param><param name="value">The value.</param><param name="serializer">The calling serializer.</param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+			writer.WriteStartArray();
+			var g = value as List<IPosition>;
+	        var sb = new StringBuilder();
+	        foreach (var position in g)
+	        {
+				
+		        var geographicPosition = position as GeographicPosition;
+		        sb.Append(string.Format("[{0},{1}],", geographicPosition.Latitude.ToString(CultureInfo.InvariantCulture), geographicPosition.Longitude.ToString(CultureInfo.InvariantCulture)));
+				
+	        }
+	        var s = sb.ToString();
+	        var startIndex = s.Length-1;
+	        s= s.Remove(startIndex);
+			writer.WriteRawValue(s);
+	        writer.WriteEndArray();
         }
 
         /// <summary>
