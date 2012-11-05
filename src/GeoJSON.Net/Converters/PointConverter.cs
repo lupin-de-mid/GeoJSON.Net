@@ -15,8 +15,8 @@ namespace GeoJSON.Net.Converters
     using System;
     using System.Collections.Generic;
 
-    using GeoJSON.Net.Exceptions;
-    using GeoJSON.Net.Geometry;
+    using Exceptions;
+    using Geometry;
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
@@ -24,9 +24,9 @@ namespace GeoJSON.Net.Converters
     /// <summary>
     /// Converter to read and write the <see cref="GeographicPosition" /> type.
     /// </summary>
-    public class PositionConverter : JsonConverter
+    public class PointConverter : JsonConverter
     {
-        /// <summary>
+        /// <summary>	
         /// Writes the JSON representation of the object.
         /// </summary>
         /// <param name="writer">The <see cref="T:Newtonsoft.Json.JsonWriter"/> to write to.</param><param name="value">The value.</param><param name="serializer">The calling serializer.</param>
@@ -34,17 +34,8 @@ namespace GeoJSON.Net.Converters
         {
 			writer.WriteStartArray();
 			var g = value as List<IPosition>;
-	        var sb = new StringBuilder();
-	        foreach (var position in g)
-	        {
-				
-		        var geographicPosition = position as GeographicPosition;
-		        sb.Append(string.Format("[{0},{1}],", geographicPosition.Latitude.ToString(CultureInfo.InvariantCulture), geographicPosition.Longitude.ToString(CultureInfo.InvariantCulture)));
-				
-	        }
-	        var s = sb.ToString();
-	        var startIndex = s.Length-1;
-	        s= s.Remove(startIndex);
+	        var geographicPosition =g[0] as GeographicPosition;
+	        var s = string.Format("{0},{1}", geographicPosition.Latitude.ToString(CultureInfo.InvariantCulture), geographicPosition.Longitude.ToString(CultureInfo.InvariantCulture));
 			writer.WriteRawValue(s);
 	        writer.WriteEndArray();
         }

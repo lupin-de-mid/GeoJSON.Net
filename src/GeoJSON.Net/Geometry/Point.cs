@@ -42,7 +42,7 @@ namespace GeoJSON.Net.Geometry
         /// </summary>
         /// <value>The Coordinates.</value>
         [JsonProperty(PropertyName = "coordinates", Required = Required.Always)]
-        [JsonConverter(typeof(PositionConverter))]
+        [JsonConverter(typeof(PointConverter))]
         public List<IPosition> Coordinates { get; private set; }
     }
 }
