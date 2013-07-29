@@ -168,5 +168,13 @@ namespace GeoJSON.Net.Geometry
         {
             return this.Altitude == null ? string.Format(CultureInfo.InvariantCulture, "Latitude: {0}, Longitude: {1}", this.Latitude, this.Longitude) : string.Format(CultureInfo.InvariantCulture, "Latitude: {0}, Longitude: {1}, Altitude: {2}", this.Latitude, this.Longitude, this.Altitude);
         }
+        
+        public override bool Equals(object obj)
+        {
+            var compareTo = obj as GeographicPosition;
+            return this.Altitude == compareTo.Altitude
+                   && this.Latitude == compareTo.Latitude
+                   && this.Longitude == compareTo.Longitude;
+        }
     }
 }
